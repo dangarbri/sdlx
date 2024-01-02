@@ -63,6 +63,10 @@ install(EXPORT SDLXTargets
         NAMESPACE SDLX::
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sdlx
 )
+export(EXPORT SDLXTargets
+       FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/SDLXTargets.cmake"
+       NAMESPACE SDLX::
+)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET sdlx PROPERTY C_STANDARD 11)
