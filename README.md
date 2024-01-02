@@ -17,12 +17,11 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(sdlx)
 include(${sdlx_BINARY_DIR}/SDLXTargets.cmake)
-get_target_property(SDLX_INCLUDE_DIRS SDLX::sdlx INTERFACE_INCLUDE_DIRECTORIES)
 
 ...
 
 find_dependency(SDL2)
-target_include_directories(<your target> PRIVATE ${SDLX_INCLUDE_DIRS})
+target_include_directories(<your target> PRIVATE SDLX::sdlx)
 target_link_libraries(<your target> SDLX::sdlx)
 ```
 
