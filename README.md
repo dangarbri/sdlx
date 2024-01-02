@@ -2,6 +2,30 @@
 
 SDL extensions wrap some common SDL functions to make the library a little more friendly.
 
+## Usage
+
+To include in your project, add the following to your `CMakeLists.txt`.
+You will also need the dependencies for sdlx: SDL2, SDL2_ttf, and SDL2_image.
+
+```cmake
+include(FetchContent)
+include(CMakeFindDependencyMacro)
+FetchContent_Declare(
+  sdlx
+  GIT_REPOSITORY https://github.com/dangarbri/sdlx.git
+  GIT_TAG e63e6d379a846be993c2ff356cba5594dbd53601 # Replace with desired commit
+)
+FetchContent_MakeAvailable(sdlx)
+include(${sdlx_BINARY_DIR}/SDLXTargets.cmake)
+get_target_property(SDLX_INCLUDE_DIRS SDLX::sdlx INTERFACE_INCLUDE_DIRECTORIES)
+
+...
+
+find_dependency(SDL2)
+target_include_directories(<your target> PRIVATE ${SDLX_INCLUDE_DIRS})
+target_link_libraries(<your target> SDLX::sdlx)
+```
+
 ## Reference
 
 ```
