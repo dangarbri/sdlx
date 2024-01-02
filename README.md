@@ -113,3 +113,13 @@ SDLX adds a new log categories
 ## Randomness
 
 SDLX calls `srand` during SDLX_Init and provides `SDL_RandInt` for choosing random numbers.
+
+## Math
+
+You can compare floats with `SDLX_FloatEq` to handle comparing floats.
+This is good for when you need to compare float math with some rounding errors.
+i.e. `5 == 5.000000001` would be false, but `SDLX_FloatEq(5, 5.000000001, 0.00001)` is true.
+The 3rd argument is the tolerance for how far apart the numbers need to be to be considered not equal.
+
+`SDL_Distance` can be used to compute the distance between 2 `SDL_FPoint`s
+
