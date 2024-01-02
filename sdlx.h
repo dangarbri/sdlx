@@ -103,3 +103,17 @@ Uint32 SDLX_RandInt(Uint32 min, Uint32 max);
 #define SDLX_ColorsMatch(a, b) (*((Uint32*)&a) == *((Uint32*)&b))
 
 #define SDLX_SafeFree(ptr) if (ptr) { SDL_free(ptr); ptr = NULL; }
+
+/**
+ * Compares two floats and returns whether they are equal (or close to each other)
+ * The error value is used to designate how far apart two floats could be and still be considered equal.
+ * @param a first value
+ * @param b second value
+ * @param error Maximum difference from a value for two floats to be considered equal
+ */
+#define SDLX_FloatEq(a, b, error) ((b >= (a-error)) && (b <= (a+error)))
+
+/**
+ * Computes the distance between two points
+ */
+float SDLX_Distance(SDL_FPoint* a, SDL_FPoint* b);

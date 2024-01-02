@@ -13,6 +13,7 @@ if (POLICY CMP0141)
 endif()
 
 project ("sdlx")
+enable_testing()
 add_library(sdlx "sdlx.c" "sdlx.h")
 
 find_package(SDL2 REQUIRED)
@@ -63,6 +64,8 @@ export(EXPORT SDLXTargets
        FILE "${CMAKE_CURRENT_BINARY_DIR}/SDLXTargets.cmake"
        NAMESPACE SDLX::
 )
+
+add_subdirectory(test)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET sdlx PROPERTY C_STANDARD 11)
