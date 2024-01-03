@@ -116,4 +116,4 @@ Uint32 SDLX_RandInt(Uint32 min, Uint32 max);
 /**
  * Computes the distance between two points
  */
-float SDLX_Distance(SDL_FPoint* a, SDL_FPoint* b);
+float SDLX_Distance(const SDL_FPoint* a, const SDL_FPoint* b);

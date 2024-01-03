@@ -120,7 +120,7 @@ Uint32 SDLX_RandInt(Uint32 min, Uint32 max)
 	return ((Uint32) rand() % ((max + 1) - min)) + min;
 }
 
-float SDLX_Distance(SDL_FPoint* a, SDL_FPoint* b)
+float SDLX_Distance(const SDL_FPoint* a, const SDL_FPoint* b)
 {
 	float dx = SDL_fabsf(a->x - b->x);
 	float dy = SDL_fabsf(a->y - b->y);
