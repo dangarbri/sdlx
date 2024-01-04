@@ -62,7 +62,7 @@ install(TARGETS sdlx
 install(FILES "sdlx.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 export(EXPORT SDLXTargets
-       FILE "${CMAKE_BINARY_DIR}/SDLXTargets.cmake"
+       FILE "${CMAKE_BINARY_DIR}/cmake/SDLXTargets.cmake"
        NAMESPACE SDLX::
 )
 
