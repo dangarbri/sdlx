@@ -16,13 +16,11 @@ FetchContent_Declare(
   GIT_TAG e63e6d379a846be993c2ff356cba5594dbd53601 # Replace with desired commit
 )
 FetchContent_MakeAvailable(sdlx)
-include(${sdlx_BINARY_DIR}/SDLXTargets.cmake)
 
 ...
 
 find_dependency(SDL2)
-target_include_directories(<your target> PRIVATE SDLX::sdlx)
-target_link_libraries(<your target> SDLX::sdlx)
+target_link_libraries(<your target> sdlx)
 ```
 
 ## Reference

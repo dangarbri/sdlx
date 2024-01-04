@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 # make cache variables for install destinations
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -60,9 +61,11 @@ install(TARGETS sdlx
 )
 install(FILES "sdlx.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-export(EXPORT SDLXTargets
-       FILE "${CMAKE_CURRENT_BINARY_DIR}/SDLXTargets.cmake"
-       NAMESPACE SDLX::
+install(
+    EXPORT SDLXTargets
+    DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    NAMESPACE SDLX::
+    FILE SDLXTargets.cmake
 )
 
 add_subdirectory(test)
