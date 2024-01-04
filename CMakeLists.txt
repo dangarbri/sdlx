@@ -61,19 +61,11 @@ install(TARGETS sdlx
 )
 install(FILES "sdlx.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-export(EXPORT SDLXTargets
-       FILE "${CMAKE_BINARY_DIR}/cmake/SDLXTargets.cmake"
-       NAMESPACE SDLX::
-)
-
-configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/SDLXConfig.cmake"
-  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sdlx
-)
-install(FILES
-          "${CMAKE_CURRENT_BINARY_DIR}/SDLXConfig.cmake"
-          "${CMAKE_CURRENT_BINARY_DIR}/SDLXConfigVersion.cmake"
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sdlx
+install(
+    EXPORT SDLXTargets
+    DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    NAMESPACE SDLX::
+    FILE SDLXTargets.cmake
 )
 
 add_subdirectory(test)
