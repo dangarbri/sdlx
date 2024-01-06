@@ -3,68 +3,32 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-# make cache variables for install destinations
-include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
-
-# Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
-endif()
-
 project ("sdlx")
-enable_testing()
-add_library(sdlx "sdlx.c" "sdlx.h")
 
-find_package(SDL2 REQUIRED)
-get_target_property(SDL2_RUNTIME SDL2::SDL2 IMPORTED_LOCATION)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -sUSE_SDL=2 -sUSE_SDL_TTF=2 -sUSE_SDL_IMAGE=2 -sSDL2_IMAGE_FORMATS=['png']")
+add_library(sdlx "sdlx.c")
 
-find_package(SDL2_ttf REQUIRED)
-get_target_property(SDL2_TTF_INCLUDE_DIRS SDL2_ttf::SDL2_ttf INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(SDL2_TTF_RUNTIME SDL2_ttf::SDL2_ttf IMPORTED_LOCATION)
-
-find_package(SDL2_image REQUIRED)
-get_target_property(SDL2_IMAGE_INCLUDE_DIRS SDL2_image::SDL2_image INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(SDL2_IMAGE_RUNTIME SDL2_image::SDL2_image IMPORTED_LOCATION)
-
-if(MSVC)
-file(COPY ${SDL2_TTF_RUNTIME} ${SDL2_RUNTIME} ${SDL2_IMAGE_RUNTIME}
-	 DESTINATION ${CMAKE_BINARY_DIR})
-install(FILES ${SDL2_RUNTIME} ${SDL2_TTF_RUNTIME} ${SDL2_IMAGE_RUNTIME} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-endif()
-
+find_package(SDL2)
+find_package(SDL2_ttf)
+find_package(SDL2_image)
 target_include_directories(sdlx PUBLIC
 	"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
     "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
-	${SDL2_INCLUDE_DIRS}
-	${SDL2_TTF_INCLUDE_DIRS}
-	${SDL2_IMAGE_INCLUDE_DIRS}
 )
 
-target_link_libraries(sdlx PUBLIC
-	${SDL2_LIBRARIES}
-	SDL2_ttf::SDL2_ttf
-	SDL2_image::SDL2_image
-)
+if (SDL2_FOUND)
+target_include_directories(sdlx PUBLIC ${SDL2_INCLUDE_DIRS})
+endif()
 
-install(TARGETS sdlx
-        EXPORT SDLXTargets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-install(FILES "sdlx.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+if (SDL2_ttf_FOUND)
+get_target_property(SDL2_TTF_INCLUDES SDL2_ttf::SDL2_ttf INTERFACE_INCLUDE_DIRECTORIES)
+target_include_directories(sdlx PUBLIC ${SDL2_TTF_INCLUDES})
+endif()
 
-install(
-    EXPORT SDLXTargets
-    DESTINATION "${CMAKE_INSTALL_BINDIR}"
-    NAMESPACE SDLX::
-    FILE SDLXTargets.cmake
-)
-
-add_subdirectory(test)
+if (SDL2_image_FOUND)
+get_target_property(SDL_IMAGE_INCLUDES SDL2_image::SDL2_image INTERFACE_INCLUDE_DIRECTORIES)
+target_include_directories(sdlx PUBLIC ${SDL_IMAGE_INCLUDES})
+endif()
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET sdlx PROPERTY C_STANDARD 11)
