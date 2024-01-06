@@ -3,7 +3,6 @@
 #if !defined(NDEBUG) && defined(_WIN32) && defined(_CRTDBG_MAP_ALLOC)
 #include <crtdbg.h>
 #endif
-
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "SDL_image.h"
@@ -30,11 +29,12 @@ extern SDLX_State sdlx;
 
 /**
  * Initializes all SDL subsystems.
- * This is equivalent to SDL_Init(SDL_INIT_EVERYTHING);
  * Prints an error message on failure
+ * @param sdl_flags SDL_init flags. If 0, then SDL_INIT_EVERYTHING is used
+ * @param img_flags IMG_init flags. If 0, all supported types are enabled.
  * @returns SDL_TRUE on success or SDL_FALSE
  */
-SDL_bool SDLX_Init(void);
+SDL_bool SDLX_Init(Uint32 sdl_flags, int img_flags);
 
 /**
  * Quit all SDL extensions and subsystems

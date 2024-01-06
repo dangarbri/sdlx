@@ -13,3 +13,4 @@ _deps
 /out/build/x64-debug
 /CMakePresets.json
 /out/install/x64-debug
+/emcc/build
