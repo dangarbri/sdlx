@@ -23,12 +23,10 @@ get_target_property(SDL2_RUNTIME SDL2::SDL2 IMPORTED_LOCATION)
 find_package(SDL2_ttf REQUIRED)
 get_target_property(SDL2_TTF_INCLUDE_DIRS SDL2_ttf::SDL2_ttf INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(SDL2_TTF_RUNTIME SDL2_ttf::SDL2_ttf IMPORTED_LOCATION)
-get_target_property(SDL2_TTF_LIB SDL2_ttf::SDL2_ttf IMPORTED_IMPLIB)
 
 find_package(SDL2_image REQUIRED)
 get_target_property(SDL2_IMAGE_INCLUDE_DIRS SDL2_image::SDL2_image INTERFACE_INCLUDE_DIRECTORIES)
 get_target_property(SDL2_IMAGE_RUNTIME SDL2_image::SDL2_image IMPORTED_LOCATION)
-get_target_property(SDL2_IMAGE_LINK_LIB SDL2_image::SDL2_image IMPORTED_IMPLIB)
 
 if(MSVC)
 file(COPY ${SDL2_TTF_RUNTIME} ${SDL2_RUNTIME} ${SDL2_IMAGE_RUNTIME}
@@ -46,8 +44,8 @@ target_include_directories(sdlx PUBLIC
 
 target_link_libraries(sdlx PUBLIC
 	${SDL2_LIBRARIES}
-	${SDL2_TTF_LIB}
-	${SDL2_IMAGE_LINK_LIB}
+	SDL2_ttf::SDL2_ttf
+	SDL2_image::SDL2_image
 )
 
 install(TARGETS sdlx
